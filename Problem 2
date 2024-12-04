@@ -1,0 +1,67 @@
+class Car:
+    def __init__(self, make, model, sticker_price):
+        self.make = make
+        self.model = model
+        self.sticker_price = sticker_price
+
+    def discount_price(self):
+        return self.sticker_price * 0.90
+
+class Sport(Car):
+    def __init__(self, make, model, sticker_price):
+        super().__init__(make, model, sticker_price)
+        self.sport_wheels = False
+        self.sport_engine = False
+        self.sport_interior = False
+    
+    def add_sport_wheels(self, option):
+        self.sport_wheels = option
+
+    def add_sport_engine(self, option):
+        self.sport_engine = option
+
+    def add_sport_interior(self, option):
+        self.sport_interior = option
+
+    def price_with_options(self):
+        updated_price = self.sticker_price
+        if self.sport_wheels:
+            updated_price += 1000
+        if self.sport_engine:
+            updated_price += 3000
+        if self.sport_interior:
+            updated_price += 2000
+        return updated_price
+
+class Luxury(Sport):
+    def __init__(self, make, model, sticker_price):
+        super().__init__(make, model, sticker_price)
+        self.gps = False
+        self.self_driving = False
+    
+    def add_gps(self, option):
+        self.gps = option
+
+    def add_self_driving(self, option):
+        self.self_driving = option
+
+    def price_with_options(self):
+        updated_price = super().price_with_options()
+        if self.gps:
+            updated_price += 5000
+        if self.self_driving:
+            updated_price += 10000
+        return updated_price
+
+# Instantiate and test
+sport_car = Sport("Toyota", "Supra", 50000)
+sport_car.add_sport_wheels(True)
+sport_car.add_sport_engine(True)
+sport_car.add_sport_interior(False)
+print(f"Sport Car Updated Price: ${sport_car.price_with_options()}")
+
+luxury_car = Luxury("Mercedes", "S-Class", 80000)
+luxury_car.add_gps(True)
+luxury_car.add_self_driving(True)
+luxury_car.add_sport_engine(True)
+print(f"Luxury Car Updated Price: ${luxury_car.price_with_options()}")
